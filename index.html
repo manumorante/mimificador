@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mimimi - Mimificador</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato|Satisfy'>
+<style>
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css";
+
+body {
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Satisfy', cursive;
+}
+</style>
+</head>
+<body translate="no">
+<div class="container">
+<h1>Mimificador</h1>
+<h3>Convierte cualquier frase a "mi mi mi".</h3>
+<div class="form-group">
+<textarea class="form-control js-text" cols="50" id="text" placeholder="Escribe la tonteria que quieras ..." rows="3"></textarea>
+</div>
+<p>
+<button class="btn btn-primary js-convert">Mimificar <span class="fa fa-magic" /> </button>
+</p>
+<hr />
+<h4>Resultado:</h4>
+<p class="alert alert-info" id="output"></p>
+<p>
+<button class="js-copy btn btn-default" data-clipboard-action="copy" data-clipboard-target="#output">Copiar</button>
+</p>
+</div>
+<div class="active" id="about-Manu">
+<a class="manu" href="https://codepen.io/manumorante/">With <i class="fas fa-heart"></i> by Manu Morante</a><a href="https://twitter.com/_manumorante/" target="_blank"><i class="fab fa-twitter"></i></a><a href="https://github.com/manumorante/" target="_blank"><i class="fab fa-github"></i></a><a href="https://instagram.com/manu.morante/" target="_blank"><i class="fab fa-instagram"></i></a><a href="https://codepen.io/manumorante/" target="_blank"><i class="fab fa-codepen"></i></a><a class="closebox" href="javascript:document.getElementById(&quot;about-Manu&quot;).classList.remove(&quot;active&quot;);"><i class="far fa-times-circle"></i></a>
+</div>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
+<script src='https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js'></script>
+<script id="rendered-js">
+(function() {
+  var $convert, $copy, $output, $text, convert;
+
+  $text = $('.js-text');
+
+  $convert = $('.js-convert');
+
+  $output = $('#output');
+
+  $copy = $('.js-copy');
+
+  $convert.on('click', function() {
+    return convert();
+  });
+
+  convert = function() {
+    var t, t1, t2, t3, t4;
+    t = $text.val().toLowerCase();
+    t1 = t.replace(/qu/g, 'k');
+    t2 = t1.replace(/ca|co|cu/g, 'ki');
+    t3 = t2.replace(/[aeiou]/g, 'i');
+    t4 = t3.replace(/[áéíóú]/g, 'í');
+    return $output.html(t4);
+  };
+
+  new Clipboard('.js-copy');
+
+}).call(this);
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiPGFub255bW91cz4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQSxNQUFBLFFBQUEsRUFBQSxLQUFBLEVBQUEsT0FBQSxFQUFBLEtBQUEsRUFBQTs7RUFBQSxLQUFBLEdBQVEsQ0FBQSxDQUFFLFVBQUY7O0VBQ1IsUUFBQSxHQUFXLENBQUEsQ0FBRSxhQUFGOztFQUNYLE9BQUEsR0FBVSxDQUFBLENBQUUsU0FBRjs7RUFDVixLQUFBLEdBQVEsQ0FBQSxDQUFFLFVBQUY7O0VBRVIsUUFBUSxDQUFDLEVBQVQsQ0FBWSxPQUFaLEVBQXFCLFFBQUEsQ0FBQSxDQUFBO1dBQUcsT0FBQSxDQUFBO0VBQUgsQ0FBckI7O0VBRUEsT0FBQSxHQUFVLFFBQUEsQ0FBQSxDQUFBO0FBQ1IsUUFBQSxDQUFBLEVBQUEsRUFBQSxFQUFBLEVBQUEsRUFBQSxFQUFBLEVBQUE7SUFBQSxDQUFBLEdBQUksS0FBSyxDQUFDLEdBQU4sQ0FBQSxDQUFXLENBQUMsV0FBWixDQUFBO0lBQ0osRUFBQSxHQUFLLENBQUMsQ0FBQyxPQUFGLENBQVUsS0FBVixFQUFpQixHQUFqQjtJQUNMLEVBQUEsR0FBSyxFQUFFLENBQUMsT0FBSCxDQUFXLFdBQVgsRUFBd0IsSUFBeEI7SUFDTCxFQUFBLEdBQUssRUFBRSxDQUFDLE9BQUgsQ0FBVyxVQUFYLEVBQXVCLEdBQXZCO0lBQ0wsRUFBQSxHQUFLLEVBQUUsQ0FBQyxPQUFILENBQVcsVUFBWCxFQUF1QixHQUF2QjtXQUNMLE9BQU8sQ0FBQyxJQUFSLENBQWEsRUFBYjtFQU5ROztFQVFWLElBQUksU0FBSixDQUFjLFVBQWQ7QUFmQSIsInNvdXJjZXNDb250ZW50IjpbIiR0ZXh0ID0gJCgnLmpzLXRleHQnKVxuJGNvbnZlcnQgPSAkKCcuanMtY29udmVydCcpXG4kb3V0cHV0ID0gJCgnI291dHB1dCcpXG4kY29weSA9ICQoJy5qcy1jb3B5JylcblxuJGNvbnZlcnQub24gJ2NsaWNrJywgLT4gY29udmVydCgpXG5cbmNvbnZlcnQgPSAtPlxuICB0ID0gJHRleHQudmFsKCkudG9Mb3dlckNhc2UoKVxuICB0MSA9IHQucmVwbGFjZSgvcXUvZywgJ2snKVxuICB0MiA9IHQxLnJlcGxhY2UoL2NhfGNvfGN1L2csICdraScpXG4gIHQzID0gdDIucmVwbGFjZSgvW2FlaW91XS9nLCAnaScpXG4gIHQ0ID0gdDMucmVwbGFjZSgvW8Ohw6nDrcOzw7pdL2csICfDrScpXG4gICRvdXRwdXQuaHRtbCh0NClcblxubmV3IENsaXBib2FyZCgnLmpzLWNvcHknKTtcbiAgIl19
+//# sourceURL=coffeescript
+    </script>
+</body>
+</html>
