@@ -7,15 +7,23 @@ function Mimificator() {
 
   if(!textarea || !output || !btnAction) return false
 
+  textarea.focus()
+
   function mimify(stringParam) {
     let t = stringParam || ''
     t = t.toLowerCase()
     t = t.replace(/qu/g, 'k')
     t = t.replace(/ca|co|cu/g, 'ki')
-    t = t.replace(/[aeiou]/g, 'i')
-    t = t.replace(/[áéíóú]/g, 'í')
+    t = t.replace(/[aeou]/g, 'i')
+    t = t.replace(/[áéóú]/g, 'í')
+    t = t.replace(/ii/g, 'ui')
+    
     return t
   }
+
+ // Expresión regular para eliminar los espacios en blanco despues de consonantes:
+
+
 
   function execute() {
     inputText = textarea.value
