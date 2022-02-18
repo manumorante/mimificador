@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.dev.config.js",
-    "cssdev": "npx tailwindcss -o output/output.css --minify",
-    "cssbuild": "npx tailwindcss -i ./index.css -o ./output/output.css --watch",
+    "dev": "npm run cssdev | webpack-dev-server --config webpack.dev.config.js",
+    "cssbuild": "tailwindcss -o output/output.css --minify",
+    "cssdev": "tailwindcss -i ./src/index.css -o ./output/index.css --watch",
     "build": "webpack"
   },
   "author": "",
@@ -20,6 +20,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "tailwindcss": "^3.0.23",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.7"
   }

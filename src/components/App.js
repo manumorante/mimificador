@@ -14,7 +14,7 @@ const App = () => {
     console.log('copied')
   }
 
-  return <div className="container mx-auto flex flex-col h-screen p-8 gap-6">
+  return <div className="container mx-auto flex flex-col h-screen p-8 gap-7">
     <div>
       <h1 className="text-3xl font-bold">Mimificador</h1>
       <h2 className="mt-2">Convierte texto a "mi mi mi"</h2>
@@ -32,5 +32,3 @@ const App = () => {
 }
 
 export default App
-
-// bg-gray-900 text-gray-200 font-mono

@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'output'),
-    filename: 'output.js',
+    filename: 'index.js',
     libraryTarget: 'umd'
   },
 
