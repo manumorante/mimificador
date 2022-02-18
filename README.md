@@ -1,8 +1,8 @@
 # Mimificador
 
-## Javascript
+## minimal-react
 
 ## Tailwindcss
 
-```npx tailwindcss -i ./index.css -o ./build.css --watch```
-```npx tailwindcss -o ./build.css --minify```
+```npx tailwindcss -i ./index.css -o ./output/output.css --watch```
+```npx tailwindcss -o ./output/output.css --minify```
