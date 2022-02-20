@@ -2,10 +2,16 @@ import React, { useState } from 'react'
 import { mimify } from '../Mimificator'
 
 const App = () => {
-  const [mimified, setMimified] = useState('')
+  const [mimified, setMimified] = useState('...')
+
+  const fitTextarea = (e) => {
+    e.target.style.height = 'inherit';
+    e.target.style.height = `${e.target.scrollHeight + 9}px`; 
+  }
   
-  const handleKeyUp = (e) => {
+  const handleKeyDown = (e) => {
     setMimified(mimify(e.target.value))
+    fitTextarea(e)
   }
 
   const handleCopy = (e) => {
@@ -21,8 +27,8 @@ const App = () => {
     </div>
       
     <div className="flex flex-col md:flex-row gap-3 md:h-1/2">
-      <textarea onKeyUp={handleKeyUp} rows="1" className="text-lg resize-none block w-full p-5 rounded-lg border-4 border-gray-700 focus:border-gray-600 bg-gray-800 md:h-full focus:outline-none" placeholder="Escribe aquí tu texto..." autoComplete="off" />
-      <textarea value={mimified} placeholder="..." readOnly rows="1" className="text-lg resize-none block w-full p-5 rounded-lg border-4 border-sky-700 bg-sky-800 md:h-full focus:outline-none cursor-pointer" title="Click para copiar" />
+      <textarea onKeyDown={handleKeyDown} className="text-lg resize-none block w-full p-5 rounded-lg border-4 border-gray-700 focus:border-gray-600 bg-gray-800 md:h-full focus:outline-none" placeholder="Escribe algo..." autoComplete="off" />
+      <div className="text-lg resize-none block w-full p-5 rounded-lg border-4 border-sky-700 bg-sky-800 md:h-full focus:outline-none cursor-pointer break-all" title="Click para copiar">{mimified}</div>
     </div>
 
     <div>
