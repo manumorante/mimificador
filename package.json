@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run cssdev | webpack-dev-server --config webpack.dev.config.js",
-    "cssbuild": "tailwindcss -o output/output.css --minify",
-    "cssdev": "tailwindcss -i ./src/index.css -o ./output/index.css --watch",
-    "build": "webpack"
+    "start": "npm run build:tailwind | webpack-dev-server --config webpack.dev.config.js",
+    "build": "npm run build:tailwind | webpack",
+    "build:tailwind": "tailwindcss -i ./src/index.css -o ./dist/index.css --minify"
   },
   "author": "",
   "license": "ISC",
