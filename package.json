@@ -1,26 +1,20 @@
 {
   "name": "mimimi",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "2.0.0",
   "scripts": {
-    "start": "npm run build:tailwind | webpack-dev-server --config webpack.dev.config.js",
-    "build": "npm run build:tailwind | webpack",
-    "build:tailwind": "tailwindcss -i ./src/index.css -o ./dist/index.css --minify"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "tailwindcss": "^3.0.23"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "tailwindcss": "^3.0.23",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
+    "@vitejs/plugin-react-refresh": "^1.3.1",
+    "autoprefixer": "^10.3.4",
+    "postcss": "^8.3.6",
+    "vite": "^2.5.4"
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { mimify } from '../Mimificator'
+import { mimify } from './Mimificator'
 
 const App = () => {
   const [mimified, setMimified] = useState('...')
