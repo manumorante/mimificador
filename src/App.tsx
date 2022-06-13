@@ -1,8 +1,22 @@
 import { useState } from 'react'
 import { mimify } from './utils/Mimificator'
 
+const noCopy = () => {
+  const isSupported = Boolean(
+    navigator.clipboard && navigator.clipboard.writeText
+  )
+  return isSupported
+}
+
+const textFromUrl = () => {
+  const url = new URL(window.location.href)
+  const params = new URLSearchParams(url.search)
+  return params.get('text') || ''
+}
+
 function App() {
-  const [mimified, setMimified] = useState('...')
+  const defaultText = textFromUrl()
+  const [mimified, setMimified] = useState(mimify(defaultText))
 
   const handleKey = (e: KeyboardEvent) => {
     const textarea = e.target as HTMLTextAreaElement
@@ -11,6 +25,7 @@ function App() {
   }
 
   const copyToClipboard = () => {
+    if (!navigator.clipboard) return false
     navigator.clipboard.writeText(mimified)
   }
 
@@ -28,11 +43,12 @@ function App() {
             className='text-lg resize-none block w-full p-5 rounded-lg border-4 border-gray-700 focus:border-gray-600 bg-gray-800 md:h-full focus:outline-none'
             placeholder='Escribe algo...'
             autoComplete='off'
+            defaultValue={defaultText}
           />
           <div
             onClick={copyToClipboard}
             className='text-lg resize-none block w-full p-5 rounded-lg border-4 border-sky-700 bg-sky-800 md:h-full focus:outline-none cursor-pointer break-all'
-            title='Click para copiar'>
+            title={noCopy() ? '' : 'Click para copiar'}>
             {mimified}
           </div>
         </div>
@@ -40,9 +56,12 @@ function App() {
         <div>
           <button
             onClick={copyToClipboard}
-            className='w-full p-4 rounded-md bg-gray-700 hover:bg-gray-600'
+            className={`w-full p-4 rounded-md bg-gray-700 ${
+              noCopy() && 'cursor-not-allowed'
+            }`}
             data-clipboard-action='copy'
-            data-clipboard-target='#output'>
+            data-clipboard-target='#output'
+            disabled={noCopy()}>
             Copiar
           </button>
         </div>
