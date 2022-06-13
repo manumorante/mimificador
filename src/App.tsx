@@ -53,7 +53,7 @@ function App() {
 
           <div
             onClick={() => copyToClipboard(mimified)}
-            className='text-lg resize-none block w-full p-5 rounded-lg border-4 border-sky-700 bg-sky-800 md:h-full focus:outline-none cursor-pointer break-all'
+            className='text-lg resize-none block w-full p-5 rounded-lg border-4 border-sky-700 bg-sky-800 md:h-full focus:outline-none cursor-pointer break-words'
             title={noCopy() ? '' : 'Click para copiar'}>
             {mimified}
           </div>

@@ -10,10 +10,11 @@ export function mimify(text: string) {
   t = t.replace(/[óòöô]/g, 'o')
   t = t.replace(/[úùüû]/g, 'u')
 
-  t = t.replace(/qu/g, 'k')
-  t = t.replace(/ca|co|cu/g, 'ki')
-  t = t.replace(/[aeou]/g, 'i')
-  t = t.replace(/ii/g, 'ui')
+  // Reemplaza todos los `qu` por `k`
+  t = t.replace(/que/g, 'qui')
+
+  t = t.replace(/ca|co|cu/g, 'qui')
+  t = t.replace(/[aeo]/g, 'i')
 
   return t
 }
