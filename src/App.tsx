@@ -1,32 +1,28 @@
-import { useState } from 'react'
+import { useState, KeyboardEvent, useRef } from 'react'
 import { mimify } from './utils/Mimificator'
-
-const noCopy = () => {
-  const isSupported = Boolean(
-    navigator.clipboard && navigator.clipboard.writeText
-  )
-  return isSupported
-}
-
-const textFromUrl = () => {
-  const url = new URL(window.location.href)
-  const params = new URLSearchParams(url.search)
-  return params.get('text') || ''
-}
+import { noCopy } from './utils/noCopy'
+import { textFromUrl } from './utils/textFromUrl'
+import { XIcon } from '@heroicons/react/solid'
 
 function App() {
   const defaultText = textFromUrl()
   const [mimified, setMimified] = useState(mimify(defaultText))
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const handleKey = (e: KeyboardEvent) => {
-    const textarea = e.target as HTMLTextAreaElement
-    const textMimified = mimify(textarea.value)
-    setMimified(textMimified)
+  const minimize = () => {
+    setMimified(mimify(textareaRef.current?.value || ''))
   }
 
-  const copyToClipboard = () => {
-    if (!navigator.clipboard) return false
-    navigator.clipboard.writeText(mimified)
+  const copyToClipboard = (text) => {
+    if (noCopy()) return false
+    navigator.clipboard.writeText(text)
+  }
+
+  const handleClear = () => {
+    if (!textareaRef.current) return
+
+    textareaRef.current.value = ''
+    setMimified('')
   }
 
   return (
@@ -38,15 +34,25 @@ function App() {
         </div>
 
         <div className='flex flex-col md:flex-row gap-3 md:h-1/2'>
-          <textarea
-            onKeyUp={(e) => handleKey(e)}
-            className='text-lg resize-none block w-full p-5 rounded-lg border-4 border-gray-700 focus:border-gray-600 bg-gray-800 md:h-full focus:outline-none'
-            placeholder='Escribe algo...'
-            autoComplete='off'
-            defaultValue={defaultText}
-          />
+          <div className='relative'>
+            <textarea
+              ref={textareaRef}
+              onKeyUp={minimize}
+              className='text-lg resize-none block w-full p-5 rounded-lg border-4 border-gray-700 focus:border-gray-600 bg-gray-800 md:h-full focus:outline-none'
+              placeholder='Escribe algo...'
+              autoComplete='off'
+              defaultValue={defaultText}
+            />
+            {mimified && (
+              <XIcon
+                onClick={handleClear}
+                className='w-6 h-6 absolute top-0 right-0 mt-3 mr-3 text-gray-500'
+              />
+            )}
+          </div>
+
           <div
-            onClick={copyToClipboard}
+            onClick={() => copyToClipboard(mimified)}
             className='text-lg resize-none block w-full p-5 rounded-lg border-4 border-sky-700 bg-sky-800 md:h-full focus:outline-none cursor-pointer break-all'
             title={noCopy() ? '' : 'Click para copiar'}>
             {mimified}
@@ -55,7 +61,7 @@ function App() {
 
         <div>
           <button
-            onClick={copyToClipboard}
+            onClick={() => copyToClipboard(mimified)}
             className={`w-full p-4 rounded-md bg-gray-700 ${
               noCopy() && 'cursor-not-allowed'
             }`}
