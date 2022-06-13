@@ -13,7 +13,7 @@ function App() {
     setMimified(mimify(textareaRef.current?.value || ''))
   }
 
-  const copyToClipboard = (text) => {
+  const copyToClipboard = (text: string) => {
     if (noCopy()) return false
     navigator.clipboard.writeText(text)
   }
