@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { mimify } from './utils/Mimificator'
 import { noCopy } from './utils/noCopy'
 import { textFromUrl } from './utils/textFromUrl'
