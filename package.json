@@ -4,7 +4,8 @@
   "version": "3.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build --base=/polaroids/",
+    "deploy": "git add -f dist/ public/.nojekyll && git commit -m \"Deploy\" && git subtree push --prefix dist origin gh-pages",
     "preview": "vite preview"
   },
   "dependencies": {
