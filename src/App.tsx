@@ -1,21 +1,32 @@
+import data from '../public/data.json'
+import cx from 'clsx'
 import { useState, useRef } from 'react'
 import { mimify } from './utils/Mimificator'
-import { noCopy } from './utils/noCopy'
 import { textFromUrl } from './utils/textFromUrl'
 import { XIcon } from '@heroicons/react/solid'
 
-function App() {
+export default function App() {
   const defaultText = textFromUrl()
   const [mimified, setMimified] = useState(mimify(defaultText))
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const minimize = () => {
-    setMimified(mimify(textareaRef.current?.value || ''))
+  const hundleKeyUp = () => {
+    minimize()
   }
 
-  const copyToClipboard = (text: string) => {
-    if (noCopy()) return false
-    navigator.clipboard.writeText(text)
+  const handleCopy = () => {
+    alert('TBD')
+  }
+
+  function showExampleNum(num: number) {
+    if (!textareaRef.current) return
+
+    textareaRef.current.value = data.examples[num]
+    minimize()
+  }
+
+  const minimize = () => {
+    setMimified(mimify(textareaRef.current?.value || ''))
   }
 
   const handleClear = () => {
@@ -25,55 +36,80 @@ function App() {
     setMimified('')
   }
 
+  const buttonCx = cx(
+    'py-3 px-4 rounded-md',
+    'bg-gradient-to-tr from-emerald-500 to-emerald-700',
+    'font-bold'
+  )
+
+  const titleCx = cx('text-var-xl font-extrabold tracking-tight')
+  const descriptionCx = cx('text-var-lg font-normal leading-tight')
+
+  const textareaCx = cx(
+    'block',
+    'w-full md:h-full p-5',
+    'rounded-lg border-4 focus:outline-none',
+    'text-var-md',
+    'resize-none'
+  )
+  const inputCx = cx(textareaCx, 'border-gray-700 focus:border-gray-600 bg-gray-800')
+  const outputCx = cx(textareaCx, 'border-sky-700 bg-sky-800')
+
+  const clearButtonCx = cx(
+    'absolute top-0 right-0',
+    'w-12 h-12 p-3',
+    'text-gray-500',
+    'cursor-pointer'
+  )
+
   return (
-    <div className='App'>
-      <div className='container mx-auto flex flex-col h-screen p-8 gap-7'>
-        <div>
-          <h1 className='text-3xl font-bold'>Mimificador</h1>
-          <h2 className='mt-2'>Convierte texto a "mi mi mi"</h2>
+    <>
+      <h1 className={titleCx}>{data.title}</h1>
+
+      <h2 className={descriptionCx}>
+        Versiona texto a <strong>mi mi mi</strong> burlón reemplazando las vocales con{' '}
+        <strong>i</strong>
+      </h2>
+
+      <div className='my-3 flex flex-col md:flex-row gap-3'>
+        <div className='relative'>
+          <textarea
+            ref={textareaRef}
+            onKeyUp={hundleKeyUp}
+            className={inputCx}
+            placeholder={data.input.placeholder}
+            autoComplete='off'
+            defaultValue={defaultText}
+          />
+          {mimified && <XIcon onClick={handleClear} className={clearButtonCx} />}
         </div>
 
-        <div className='flex flex-col md:flex-row gap-3 md:h-1/2'>
-          <div className='relative'>
-            <textarea
-              ref={textareaRef}
-              onKeyUp={minimize}
-              className='text-lg resize-none block w-full p-5 rounded-lg border-4 border-gray-700 focus:border-gray-600 bg-gray-800 md:h-full focus:outline-none'
-              placeholder='Escribe algo...'
-              autoComplete='off'
-              defaultValue={defaultText}
-            />
-            {mimified && (
-              <XIcon
-                onClick={handleClear}
-                className='w-6 h-6 absolute top-0 right-0 mt-3 mr-3 text-gray-500'
-              />
-            )}
-          </div>
-
-          <div
-            onClick={() => copyToClipboard(mimified)}
-            className='text-lg resize-none block w-full p-5 rounded-lg border-4 border-sky-700 bg-sky-800 md:h-full focus:outline-none cursor-pointer break-words'
-            title={noCopy() ? '' : 'Click para copiar'}>
-            {mimified}
-          </div>
-        </div>
-
-        <div>
-          <button
-            onClick={() => copyToClipboard(mimified)}
-            className={`w-full p-4 rounded-md bg-gray-700 ${
-              noCopy() && 'cursor-not-allowed'
-            }`}
-            data-clipboard-action='copy'
-            data-clipboard-target='#output'
-            disabled={noCopy()}>
-            Copiar
-          </button>
+        <div onClick={handleCopy} className={outputCx} title={data.output.copy}>
+          {mimified}
         </div>
       </div>
-    </div>
+
+      <section>
+        <span>Ejemplos:</span>{' '}
+        {data.examples.map((example, index) => (
+          <>
+            <span
+              onClick={() => showExampleNum(index)}
+              key={index}
+              className='cursor-pointer underline underline-offset-4'>
+              {example}
+            </span>
+            {',  '}
+          </>
+        ))}
+        {'...'}
+      </section>
+
+      <div className='sticky bottom-8 flex justify-center'>
+        <button onClick={handleCopy} className={buttonCx}>
+          {data.cta.text}
+        </button>
+      </div>
+    </>
   )
 }
-
-export default App

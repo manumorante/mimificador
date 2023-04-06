@@ -1,0 +1,17 @@
+{
+  "title": "Mimificador",
+  "input": {
+    "placeholder": "Escribe algo aquí"
+  },
+  "output": {
+    "copy": "Click para copiar"
+  },
+  "cta": {
+    "text": "Compartir"
+  },
+  "examples": [
+    "mira que te lo dije",
+    "al final voy a llegar tarde",
+    "pues mi primo tiene uno mejor"
+  ]
+}
