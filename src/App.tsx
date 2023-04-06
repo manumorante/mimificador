@@ -3,7 +3,6 @@ import cx from 'clsx'
 import { useState, useRef } from 'react'
 import { mimify } from './utils/Mimificator'
 import { textFromUrl } from './utils/textFromUrl'
-import { XIcon } from '@heroicons/react/solid'
 
 export default function App() {
   const defaultText = textFromUrl()
@@ -15,7 +14,7 @@ export default function App() {
   }
 
   const handleCopy = () => {
-    alert('TBD')
+    // alert('TBD')
   }
 
   function showExampleNum(num: number) {
@@ -46,21 +45,18 @@ export default function App() {
   const descriptionCx = cx('text-var-lg font-normal leading-tight')
 
   const textareaCx = cx(
-    'block',
-    'w-full md:h-full p-5',
+    'block w-full p-5',
     'rounded-lg border-4 focus:outline-none',
     'text-var-md',
-    'resize-none'
+    'resize-none',
+    'transition-colors duration-500'
   )
-  const inputCx = cx(textareaCx, 'border-gray-700 focus:border-gray-600 bg-gray-800')
+  const inputCx = cx(
+    textareaCx,
+    'border-gray-700 focus:border-gray-600 bg-gray-800/60 focus:bg-gray-800'
+  )
   const outputCx = cx(textareaCx, 'border-sky-700 bg-sky-800')
-
-  const clearButtonCx = cx(
-    'absolute top-0 right-0',
-    'w-12 h-12 p-3',
-    'text-gray-500',
-    'cursor-pointer'
-  )
+  const outputPlaceholderCx = cx(textareaCx, 'text-sky-500 border-sky-900 bg-sky-950')
 
   return (
     <>
@@ -72,20 +68,29 @@ export default function App() {
       </h2>
 
       <div className='my-3 flex flex-col md:flex-row gap-3'>
-        <div className='relative'>
-          <textarea
-            ref={textareaRef}
-            onKeyUp={hundleKeyUp}
-            className={inputCx}
-            placeholder={data.input.placeholder}
-            autoComplete='off'
-            defaultValue={defaultText}
-          />
-          {mimified && <XIcon onClick={handleClear} className={clearButtonCx} />}
-        </div>
+        <textarea
+          ref={textareaRef}
+          onKeyUp={hundleKeyUp}
+          className={inputCx}
+          placeholder={data.input.placeholder}
+          autoComplete='off'
+          defaultValue={defaultText}
+        />
 
-        <div onClick={handleCopy} className={outputCx} title={data.output.copy}>
-          {mimified}
+        {!mimified ? (
+          <div className={outputPlaceholderCx}>{data.output.placeholder}</div>
+        ) : (
+          <div className={outputCx}>{mimified}</div>
+        )}
+
+        <div
+          onClick={handleClear}
+          className={cx(
+            'text-right transition duration-500',
+            { '-translate-y-4 opacity-0 cursor-default': !mimified },
+            { 'opacity-60 cursor-pointer': !!mimified }
+          )}>
+          Limpiar
         </div>
       </div>
 

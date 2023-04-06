@@ -4,7 +4,8 @@
     "placeholder": "Escribe algo aquí"
   },
   "output": {
-    "copy": "Click para copiar"
+    "copy": "Click para copiar",
+    "placeholder": "Aquí aparecerá el texto mimificado"
   },
   "cta": {
     "text": "Compartir"
