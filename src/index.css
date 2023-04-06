@@ -3,15 +3,19 @@
 @tailwind utilities;
 
 @layer utilities {
-  .text-var-xl {
+  .text-var-2xl {
     font-size: min(8vw, 52px);
   }
 
-  .text-var-lg {
+  .text-var-xl {
     font-size: min(5vw, 40px);
   }
 
+  .text-var-lg {
+    font-size: min(5vw, 28px);
+  }
+
   .text-var-md {
-    font-size: min(3.8vw, 20px);
+    font-size: min(4vw, 20px);
   }
 }
