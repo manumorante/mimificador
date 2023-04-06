@@ -2,26 +2,33 @@ import data from '../public/data.json'
 import cx from 'clsx'
 import { useState, useRef } from 'react'
 import { mimify } from './utils/Mimificator'
-import { textFromUrl } from './utils/textFromUrl'
+import { getTextFromURLParam } from './utils/getTextFromURLParam'
 
 export default function App() {
-  const defaultText = textFromUrl()
+  const [defaultText, setDefault] = useState(getTextFromURLParam())
   const [mimified, setMimified] = useState(mimify(defaultText))
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const hundleKeyUp = () => {
+    updateURL()
     minimize()
-  }
-
-  const handleCopy = () => {
-    // alert('TBD')
   }
 
   function showExampleNum(num: number) {
     if (!textareaRef.current) return
 
     textareaRef.current.value = data.examples[num]
+    updateURL()
     minimize()
+  }
+
+  function updateURL() {
+    if (!textareaRef.current) return
+
+    const text = textareaRef.current.value
+    const url = new URL(window.location.href)
+    url.searchParams.set('t', text)
+    window.history.pushState({}, '', url.toString())
   }
 
   const minimize = () => {
@@ -33,6 +40,7 @@ export default function App() {
 
     textareaRef.current.value = ''
     setMimified('')
+    setDefault('')
   }
 
   const buttonCx = cx(
@@ -42,8 +50,14 @@ export default function App() {
     'font-bold'
   )
 
+  const cleanLinkCx = cx(
+    'text-right transition duration-500',
+    { 'opacity-40 cursor-default': !mimified },
+    { 'opacity-95 cursor-pointer': !!mimified }
+  )
+
   const titleCx = cx(
-    'text-var-2xl text-neutral-900 dark:text-neutral-50 font-extrabold tracking-tight'
+    'text-var-xl text-neutral-900 dark:text-neutral-50 font-extrabold tracking-tight'
   )
   const descriptionCx = cx('mb-3 text-var-xl font-normal leading-tight sm:leading-none ')
 
@@ -66,35 +80,28 @@ export default function App() {
     'dark:focus:bg-gray-800 dark:focus:border-gray-600'
   )
 
-  const outputPlaceholderCx = cx(
-    textareaCx,
-    'text-var-md text-center',
-
-    // Light mode
-    'text-sky-500/60  bg-sky-100 border-sky-100',
-
-    // Dark mode
-    'dark:text-sky-500 dark:bg-sky-950 dark:border-sky-950'
+  const paramOutputCx = cx(
+    'absolute bottom-0',
+    'w-full p-4 sm:p-5',
+    'text-white uppercase text-var-2xl font-semibold leading-none text-center tracking-wide'
   )
 
-  const outputCx = cx(
-    textareaCx,
-    'text-var-lg text-center tracking-wide',
-
-    // Light mode
-    'text-sky-500  bg-sky-200 border-sky-200/50',
-
-    // Dark mode
-    'dark:text-sky-300 dark:bg-sky-900 dark:border-sky-900'
-  )
+  const boyCx = cx('w-full')
 
   return (
     <>
-      <h1 className={titleCx}>{data.title}</h1>
+      <div>
+        <h1 className={titleCx}>{data.title}</h1>
 
-      <h2 className={descriptionCx}>
-        <span className='italic'>mi mi mi ...</span> {data.description}.
-      </h2>
+        <h2 className={descriptionCx}>
+          <span className='italic'>mi mi mi ...</span> {data.description}.
+        </h2>
+      </div>
+
+      <div className='relative'>
+        <div className={paramOutputCx}>{mimified}</div>
+        <img className={boyCx} src='/mimimi-boy.jpg' alt='Whiny boy' />
+      </div>
 
       <div className='flex flex-col md:flex-row gap-3'>
         <textarea
@@ -105,45 +112,28 @@ export default function App() {
           autoComplete='off'
           defaultValue={defaultText}
         />
-
-        {!mimified ? (
-          <div className={outputPlaceholderCx}>{data.output.placeholder}</div>
-        ) : (
-          <div className={outputCx}>{mimified}</div>
-        )}
       </div>
 
-      <div
-        onClick={handleClear}
-        className={cx(
-          'text-right transition duration-500',
-          { '-translate-y-4 opacity-0 cursor-default': !mimified },
-          { 'opacity-60 cursor-pointer': !!mimified }
-        )}>
-        Limpiar
-      </div>
-
-      <div className='sticky bottom-8 flex justify-center'>
-        <button onClick={handleCopy} className={buttonCx}>
-          {data.cta.text}
-        </button>
-      </div>
-
-      <section className='text-var-md mb-6'>
-        <span>Ejemplos:</span>{' '}
-        {data.examples.map((example, index) => (
-          <>
+      <div className='flex justify-between mb-6'>
+        <div className='flex flex-col gap-3 text-var-md'>
+          {data.examples.map((example, index) => (
             <span
               onClick={() => showExampleNum(index)}
               key={index}
               className='cursor-pointer underline underline-offset-4'>
               {example}
             </span>
-            {',  '}
-          </>
-        ))}
-        {'...'}
-      </section>
+          ))}
+        </div>
+
+        <div onClick={handleClear} className={cleanLinkCx}>
+          Limpiar
+        </div>
+      </div>
+
+      <div className='sticky bottom-8 flex justify-center'>
+        <button className={buttonCx}>{data.cta.text}</button>
+      </div>
     </>
   )
 }

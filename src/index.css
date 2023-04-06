@@ -4,7 +4,7 @@
 
 @layer utilities {
   .text-var-2xl {
-    font-size: min(8vw, 52px);
+    font-size: min(9vw, 60px);
   }
 
   .text-var-xl {
