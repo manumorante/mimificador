@@ -2,7 +2,10 @@
   "title": "Mimificador",
   "description": "Todo con la letra 'i'",
   "input": {
-    "placeholder": "Escribe algo aquí"
+    "placeholder": "Respuesta"
+  },
+  "intro": {
+    "placeholder": "Introducción"
   },
   "output": {
     "copy": "Click para copiar",
@@ -11,5 +14,18 @@
   "cta": {
     "text": "Compartir"
   },
-  "examples": ["te lo dije", "llego tarde", "mi cuñado corre más", "ni machismo ni feminismo"]
+  "examples": [
+    {
+      "intro": "siempre que estás sola y suena el teléfono",
+      "text": "que tipos de masaje haceis?"
+    },
+    {
+      "intro": "viendo un prototipo inédito de iphone",
+      "text": "mi cuñado tiene un xiaomi mas rápido"
+    },
+    {
+      "intro": "tu cita tinder hablando de machismo",
+      "text": "ni machismo ni feminismo"
+    }
+  ]
 }
