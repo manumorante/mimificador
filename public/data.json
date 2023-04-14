@@ -16,6 +16,10 @@
   },
   "examples": [
     {
+      "intro": "cambiando el idioma a una web",
+      "text": "inglés, francés, japonés"
+    },
+    {
       "intro": "siempre que estás sola y suena el teléfono",
       "text": "que tipos de masaje haceis?"
     },
