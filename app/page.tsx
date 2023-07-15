@@ -1,10 +1,11 @@
 import List from "@/components/List"
+import Meme from "@/components/Meme"
 
 export default function Home() {
   return (
-    <>
-      <h1 className="text-2xl my-8 font-black">Mimificador</h1>
+    <div className="Home space-y-8">
+      <Meme />
       <List />
-    </>
+    </div>
   )
 }

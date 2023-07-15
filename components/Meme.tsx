@@ -4,7 +4,7 @@ import Image from "next/image"
 
 const mainCx = cx("Meme w-full relative")
 
-const imgCx = cx("Img block w-full h-auto object-cover rounded-lg")
+const imgCx = cx("Img block w-full h-auto object-cover rounded-xl")
 
 const textCx = cx(
   "Text",
@@ -12,10 +12,10 @@ const textCx = cx(
 
   "px-2 py-4",
   "text-2xl mm:text-3xl ml:text-4xl",
-  "text-white uppercase font-semibold leading-none text-center tracking-wide"
+  "text-white uppercase font-extrabold leading-none text-center tracking-wide"
 )
 
-export default function Meme({ text }: { text: string }) {
+export default function Meme({ text }: { text?: string }) {
   return (
     <div className={mainCx}>
       <Image
@@ -25,7 +25,7 @@ export default function Meme({ text }: { text: string }) {
         width={576}
         height={433}
       />
-      <p className={textCx}>{mimify(text)}</p>
+      {text && <p className={textCx}>{mimify(text)}</p>}
     </div>
   )
 }

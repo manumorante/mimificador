@@ -6,15 +6,11 @@ export default function Page({ params }: { params: { id: string } }) {
   const post = getPost(params.id)
   if (!post) return <div>404</div>
 
-  const mainCx = "Page bg-white rounded-lg shadow"
-
   return (
-    <div className={mainCx}>
+    <div className="Page space-y-8">
       <Meme text={post.text} />
 
-      <div className="py-6">
-        <List active={post.id} />
-      </div>
+      <List active={post.id} />
     </div>
   )
 }

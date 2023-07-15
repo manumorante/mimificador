@@ -1,29 +1,29 @@
 type Post = {
   id: string
-  intro: string
   text: string
+  info?: string
 }
 
 let posts: Post[] = [
   {
     id: "1",
-    intro: "cambiando el idioma a una web",
-    text: "inglés, francés, japonés",
+    text: "Ni machismo ni feminismo",
+    info: "Tu cita tinder",
   },
   {
     id: "2",
-    intro: "siempre que estás sola y suena el teléfono",
-    text: "que tipos de masaje haceis?",
+    text: "Masaje con final feliz",
+    info: "Clientes preguntando",
   },
   {
     id: "3",
-    intro: "viendo un prototipo inédito de iphone",
-    text: "mi cuñado tiene un xiaomi mas rápido",
+    text: "Xiaomi calidad precio",
+    info: "Hablando del nuevo iPhone",
   },
   {
     id: "4",
-    intro: "tu cita tinder hablando de machismo",
-    text: "ni machismo ni feminismo",
+    text: "Inglés, francés, japonés",
+    info: "Buscando los subtitulos en español",
   },
 ]
 
