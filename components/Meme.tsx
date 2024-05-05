@@ -4,7 +4,7 @@ import Image from "next/image"
 
 const mainCx = cx("Meme w-full relative")
 
-const imgCx = cx("Img block w-full h-auto object-cover rounded-xl")
+const imgCx = cx("Img block w-full h-auto object-cover ")
 
 const textCx = cx(
   "Text",

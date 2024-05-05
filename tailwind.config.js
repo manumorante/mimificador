@@ -16,7 +16,16 @@ module.exports = {
   theme: {
     screens: screens,
     maxWidth: screens,
-    extend: {},
+    extend: {
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "2rem",
+          sm: "2rem",
+          xl: "6rem",
+        },
+      },
+    },
   },
   plugins: [],
 }
